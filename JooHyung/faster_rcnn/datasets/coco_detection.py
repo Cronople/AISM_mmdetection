@@ -1,10 +1,10 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = '/opt/ml/detection/dataset/'
-ann_root = '/opt/ml/_boost_/stratified_kfold/basic_v2/'
-classes =['General trash','Paper','Paper pack','Metal','Glass','Plastic','Styrofoam','Plastic bag','Battery','Clothing']
+data_root = '../plastic_dataset/'
+ann_root = '../plastic_dataset/anno/'
+classes =['PET', 'PS', 'PP', 'PE']
 
-img_scale=(1024, 1024)
+img_scale=(512, 512)
 img_norm_cfg = dict(
     mean=[123.675, 116.28, 103.53], std=[58.395, 57.12, 57.375], to_rgb=True)
 
@@ -61,7 +61,7 @@ train_pipeline = [
 
 train_dataset = dict(
     type=dataset_type,
-        ann_file=ann_root + 'cv_train_3.json',
+        ann_file=ann_root + 'anno_coco_train.json',
         classes=classes,
         img_prefix=data_root,
         pipeline=train_pipeline,
@@ -102,13 +102,13 @@ data = dict(
     train=train_dataset,
     val=dict(
         type=dataset_type,
-        ann_file=ann_root + 'cv_val_3.json',
+        ann_file=ann_root + 'anno_coco_val.json',
         classes=classes,
         img_prefix=data_root,
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
-        ann_file=data_root + 'test.json',
+        ann_file=data_root + 'anno_coco_test.json',
         classes=classes,
         img_prefix=data_root,
         pipeline=test_pipeline))

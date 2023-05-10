@@ -26,12 +26,11 @@ def args_parse():
 def main():
     args = args_parse()
     
-    classes = ("General trash", "Paper", "Paper pack", "Metal", "Glass", 
-           "Plastic", "Styrofoam", "Plastic bag", "Battery", "Clothing")
+    classes = ("PET", "PS", "PP", "PE")
 
     # config file 들고오기
     cfg = Config.fromfile(args.config)
-    root='../../../../detection/dataset/'
+    root='../plastic_dataset/'
 
     epoch = 'latest'
     if args.epoch is not None:
@@ -40,8 +39,8 @@ def main():
     # dataset config 수정
     cfg.data.test.classes = classes
     cfg.data.test.img_prefix = root
-    cfg.data.test.ann_file = root + 'test.json'
-    cfg.data.test.pipeline[1]['img_scale'] = (1024,1024) # Resize
+    cfg.data.test.ann_file = root + 'anno_coco_test.json'
+    cfg.data.test.pipeline[1]['img_scale'] = (512,512) # Resize
     cfg.data.test.test_mode = True
 
     cfg.data.samples_per_gpu = 6
@@ -81,7 +80,7 @@ def main():
     coco = COCO(cfg.data.test.ann_file)
     img_ids = coco.getImgIds()
 
-    class_num = 10
+    class_num = 4
     for i, out in enumerate(output):
         prediction_string = ''
         image_info = coco.loadImgs(coco.getImgIds(imgIds=i))[0]

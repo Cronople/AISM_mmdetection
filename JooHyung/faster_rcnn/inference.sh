@@ -1,7 +1,7 @@
 python ./inference.py \
 --config ./faster_rcnn_x101_64x4d_fpn_1x_coco.py \
 --epoch epoch_30 \
---work_dir /opt/ml/save/faster-rcnn-resneXt-anchors-1024
+--work_dir ./outputs/faster-rcnn-resneXt-anchors-512
 
 
 # # Single
