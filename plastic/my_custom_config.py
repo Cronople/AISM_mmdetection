@@ -1,15 +1,9 @@
-import mmdet.datasets.coco as coco
+# import mmdet.datasets.coco as coco
 # 1. dataset settings
 dataset_type = 'CocoDataset'
 data_root = 'C:/Users/PJH/Desktop/AISM_mmdetection/data/coco/'
 backend_args = None
 
-coco.metainfo = {
-    'classes': ('PET', 'PS', 'PP', 'PE'),
-    'palette': [
-        (220, 20, 60), (119, 11, 32), (0, 0, 142), (0, 0, 230)
-    ]
-}
 
 
 train_pipeline = [  # Training data processing pipeline
@@ -214,7 +208,7 @@ log_processor = dict(by_epoch=False)
 
 # ---------- Config file inheritence------------------
 # 
-_base_ = './cascade-mask-rcnn_r50_fpn_1x_coco.py'
+_base_ = './cascade-mask-rcnn_r50_fpn.py'
 
 
 
