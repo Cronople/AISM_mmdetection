@@ -43,7 +43,7 @@ train_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='annotations/anno_coco_train.json',
+        ann_file='train/annotation_data/ann_file.json',
         data_prefix=dict(img='test/'),
         filter_cfg=dict(filter_empty_gt=True, min_size=32),
         pipeline=train_pipeline,
@@ -57,7 +57,7 @@ val_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='annotations/anno_coco_val.json',
+        ann_file='val/annotation_data/ann_file.json',
         data_prefix=dict(img='val/'),
         test_mode=True,
         pipeline=test_pipeline,
@@ -66,7 +66,7 @@ test_dataloader = val_dataloader
 
 val_evaluator = dict(
     type='CocoMetric',
-    ann_file=data_root + 'annotations/anno_coco_val.json',
+    ann_file=data_root + 'val/annotation_data/ann_file.json',
     metric=['bbox', 'segm'],
     format_only=False,
     backend_args=backend_args)

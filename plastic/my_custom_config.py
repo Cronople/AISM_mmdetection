@@ -1,18 +1,13 @@
-# the new config inherits the base configs to highlight the necessary modification, config 상속
-_base_ = 'C:/Users/PJH/Desktop/AISM_mmdetection/plastic/cascade-mask-rcnn_r50_fpn_1x_coco.py'
-
+import mmdet.datasets.coco as coco
 # 1. dataset settings
 dataset_type = 'CocoDataset'
 data_root = 'C:/Users/PJH/Desktop/AISM_mmdetection/data/coco/'
 backend_args = None
 
-classes = ('PET', 'PS', 'PP', 'PE')
-
-# Modify dataset related settings
-metainfo = {
+coco.metainfo = {
     'classes': ('PET', 'PS', 'PP', 'PE'),
     'palette': [
-        (220, 20, 60),(200, 0, 0), (150, 60, 30), (200, 200, 50)
+        (220, 20, 60), (119, 11, 32), (0, 0, 142), (0, 0, 230)
     ]
 }
 
@@ -54,8 +49,8 @@ train_dataloader = dict(
     dataset=dict(
         type=dataset_type,
         data_root=data_root,
-        ann_file='train/annotation_data/anno_coco_train.json',
-        data_prefix=dict(img='train/'),
+        ann_file='train/annotation_data/ann_file.json',
+        data_prefix=dict(img='train/image_data/'),
         filter_cfg=dict(filter_empty_gt=True, min_size=32),  # Config of filtering images and annotations
         pipeline=train_pipeline,
         backend_args=backend_args # metainfo=metainfo 제거했음
@@ -70,8 +65,8 @@ val_dataloader = dict(
         dataset=dict(
             type=dataset_type,
             data_root=data_root,
-            ann_file='val/annotation_data/anno_coco_val.json',
-            data_prefix=dict(img='val/'),
+            ann_file='val/annotation_data/ann_file.json',
+            data_prefix=dict(img='val/image_data/'),
             test_mode=True,   # Turn on the test mode of the dataset to avoid filtering annotations or images
             pipeline=test_pipeline,
             backend_args=backend_args))
@@ -81,7 +76,7 @@ test_dataloader = val_dataloader    # Testing dataloader config
 # Modify metric related settings
 val_evaluator = dict(
     type='CocoMetric',  # The coco metric used to evaluate AR, AP, and mAP for detection and instance segmentation
-    ann_file=data_root + 'val/annotation_data/anno_coco_val.json',  # Annotation file path
+    ann_file=data_root + 'val/annotation_data/ann_file.json',  # Annotation file path
     metric=['bbox', 'segm'],  # Metrics to be evaluated, `bbox` for detection and `segm` for instance segmentation
     format_only=False,
     backend_args=backend_args)
@@ -188,37 +183,38 @@ resume = False  # Whether to resume from the checkpoint defined in `load_from`. 
 
 # To use iter-based training, users should modify the train_cfg, param_scheduler, train_dataloader, default_hooks, and log_processor.
 # Iter-based training config
-# train_cfg = dict(
-#     _delete_=True,  # Ignore the base config setting (optional)
-#     type='IterBasedTrainLoop',  # Use iter-based training loop
-#     max_iters=90000,  # Maximum iterations
-#     val_interval=10000)  # Validation interval
+train_cfg = dict(
+    _delete_=True,  # Ignore the base config setting (optional)
+    type='IterBasedTrainLoop',  # Use iter-based training loop
+    max_iters=90000,  # Maximum iterations
+    val_interval=10000)  # Validation interval
 
 
 # # Change the scheduler to iter-based
-# param_scheduler = [
-#     dict(
-#         type='LinearLR', start_factor=0.001, by_epoch=False, begin=0, end=500),
-#     dict(
-#         type='MultiStepLR',
-#         begin=0,
-#         end=90000,
-#         by_epoch=False,
-#         milestones=[60000, 80000],
-#         gamma=0.1)
-# ]
+param_scheduler = [
+    dict(
+        type='LinearLR', start_factor=0.001, by_epoch=False, begin=0, end=500),
+    dict(
+        type='MultiStepLR',
+        begin=0,
+        end=90000,
+        by_epoch=False,
+        milestones=[60000, 80000],
+        gamma=0.1)
+]
 
-# # Switch to InfiniteSampler to avoid dataloader restart
-# train_dataloader = dict(sampler=dict(type='InfiniteSampler'))
+# Switch to InfiniteSampler to avoid dataloader restart
+train_dataloader = dict(sampler=dict(type='InfiniteSampler'))
 
-# # Change the checkpoint saving interval to iter-based
-# default_hooks = dict(checkpoint=dict(by_epoch=False, interval=10000))
+# Change the checkpoint saving interval to iter-based
+default_hooks = dict(checkpoint=dict(by_epoch=False, interval=10000))
 
-# # Change the log format to iter-based
-# log_processor = dict(by_epoch=False)
+# Change the log format to iter-based
+log_processor = dict(by_epoch=False)
 
 # ---------- Config file inheritence------------------
-
+# 
+_base_ = './cascade-mask-rcnn_r50_fpn_1x_coco.py'
 
 
 
