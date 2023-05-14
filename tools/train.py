@@ -14,8 +14,8 @@ from mmdet.utils import setup_cache_size_limit_of_dynamo
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a detector')
-    parser.add_argument('config', help='train config file path')
-    parser.add_argument('--work-dir', help='the dir to save logs and models')
+    parser.add_argument('config', default='./JooHyung/faster_rcnn/faster_rcnn_x101_64x4d_fpn_1x_coco.py',  help='train config file path')
+    parser.add_argument('--work-dir', default='./outputs/faster-rcnn-resneXt-higherLr-512', help='the dir to save logs and models')
     parser.add_argument(
         '--amp',
         action='store_true',

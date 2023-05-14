@@ -216,3 +216,4 @@ log_processor = dict(by_epoch=False)
 load_from = 'C:/Users/PJH/Desktop/AISM_mmdetection/checkpoints/faster_rcnn_r50_fpn_1x_coco_20200130-047c8118.pth'
 
 # python tools/train.py plastic/my_custom_config.py
+# python tools/train.py plastic/cascade-mask-rcnn_r50_fpn.py

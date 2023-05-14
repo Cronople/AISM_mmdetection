@@ -1,7 +1,7 @@
 # dataset settings
 dataset_type = 'CocoDataset'
-data_root = '../plastic_dataset/'
-ann_root = '../plastic_dataset/anno/'
+data_root = '../../../data/coco/train/image_data/'
+ann_root = '../../../data/coco/'
 classes =['PET', 'PS', 'PP', 'PE']
 
 img_scale=(512, 512)
@@ -61,7 +61,7 @@ train_pipeline = [
 
 train_dataset = dict(
     type=dataset_type,
-        ann_file=ann_root + 'anno_coco_train.json',
+        ann_file=ann_root + '/train/annotation_data/ann_file.json',
         classes=classes,
         img_prefix=data_root,
         pipeline=train_pipeline,
@@ -102,13 +102,13 @@ data = dict(
     train=train_dataset,
     val=dict(
         type=dataset_type,
-        ann_file=ann_root + 'anno_coco_val.json',
+        ann_file=ann_root + '/val/annotation_data/ann_file.json',
         classes=classes,
         img_prefix=data_root,
         pipeline=test_pipeline),
     test=dict(
         type=dataset_type,
-        ann_file=data_root + 'anno_coco_test.json',
+        ann_file=data_root + '/val/annotation_data/ann_file.json',
         classes=classes,
         img_prefix=data_root,
         pipeline=test_pipeline))

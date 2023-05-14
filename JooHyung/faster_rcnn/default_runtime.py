@@ -2,18 +2,19 @@ checkpoint_config = dict(interval=3, max_keep_ckpts=3) # 최근 3개 모델 저�
 # yapf:disable
 log_config = dict(
     interval=50,
-    hooks=[
-        dict(type='TextLoggerHook'),
-        # dict(type='TensorboardLoggerHook')
-        dict(type='WandbLoggerHook',
-                interval=1000,
-                init_kwargs=dict(
-                project='two-stage-model',
-                entity = 'canvas11',
-                name = 'KIM_faster-rcnn-resneXt-higherLr-1024'
-            ),
-        )
-    ])
+    # hooks=[
+    #     dict(type='TextLoggerHook'),
+    #     # dict(type='TensorboardLoggerHook')
+    #     dict(type='WandbLoggerHook',
+    #             interval=1000,
+    #             init_kwargs=dict(
+    #             project='two-stage-model',
+    #             entity = 'canvas11',
+    #             name = 'KIM_faster-rcnn-resneXt-higherLr-1024'
+    #         ),
+    #     )
+    # ])
+)
 # yapf:enable
 custom_hooks = [dict(type='NumClassCheckHook')]
 
